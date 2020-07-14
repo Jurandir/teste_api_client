@@ -1,0 +1,33 @@
+npm install --save express
+npm install --save express-handlebars
+npm install --save body-parser
+npm install --save body-parser
+npm install --save bootstrap
+npm install --save jquery
+npm install --save popper.js
+
+
+
+
+
+npx nodemon app.js
+
+
+
+
+Template HTML simples - Hands-on: Handlebars
+https://www.youtube.com/watch?v=-bJl1zBJbFU
+
+
+Node.js #12 - Como instalar o Handlebars no Node e criar o layout padrão para o projeto
+https://www.youtube.com/watch?v=kK98Qr03qNo
+
+
+
+Modelos Bootstrap
+http://bootstrapdesigntools.com/tools/bootstrap-menu-builder/
+http://bootsnipp.com/tags
+https://www.youtube.com/watch?v=HC6W8f3gcmc
+
+
+
