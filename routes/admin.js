@@ -1,8 +1,12 @@
 const express = require('express')
 const router = express.Router()
+const login = require('../src/verificacredenciais')
+
+const empresa = 'RunTracker Logistica inteligente.'
 
 router.get('/',(req, res) => {
-    res.send("Página principal do painel ADM")
+    const telaname = 'Login'
+    res.render("login",{empresa,telaname})
 })
 
 router.get('/posts',(req, res) => {
@@ -14,8 +18,16 @@ router.get('/categorias',(req, res) => {
 })
 
 router.get('/app',(req, res) => {
-    const empresa = 'RunTracker Logistica inteligente.'
-    res.render("exemplo",{empresa})
+    const telaname = 'Cadastro de clientes'
+    res.render("cadastro",{empresa,telaname})
+})
+
+router.post('/login',(req, res) => {
+    const liberado = login()
+    if ( liberado) {
+        res.redirect('/app')
+    }
+    res.redirect('/')
 })
 
 module.exports = router
