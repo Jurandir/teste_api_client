@@ -3,6 +3,25 @@ const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
 const app = express()
 const admin = require('./routes/admin')
+const verificacredenciais = require('./src/middleware/verificacredenciais')
+
+// sessão ( Flesh é sessão temporaria )
+const session = require("express-session")
+const flash = require("connect-flash")
+app.use(session({
+    secret: "chavedeseguranca",
+    resave: true,
+    saveUninitialized: true
+}))
+app.use(flash())
+
+// middleware ( var globais )
+app.use((req, res, next) => {
+    res.locals.success_msg = req.flash("success_msg")
+    res.locals.error_msg = req.flash("error_msg")
+    next()
+})
+
 
 // Config - Setup
 app.use(bodyParser.urlencoded({extended: true}))
@@ -11,6 +30,9 @@ app.use(bodyParser.json())
 // Views - Templates
 app.engine('handlebars',handlebars({defaltLayout: 'main', partialsDir : __dirname+'/views/partials'}))
 app.set('view engine','handlebars')
+
+// Middleware
+app.use(verificacredenciais);
 
 // Rotas
 app.use('/',admin)

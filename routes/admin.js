@@ -1,12 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const login = require('../src/verificacredenciais')
 
 const empresa = 'RunTracker Logistica inteligente.'
 
 router.get('/',(req, res) => {
-    const telaname = 'Login'
-    res.render("login",{empresa,telaname})
+    res.redirect('/login')
 })
 
 router.get('/posts',(req, res) => {
@@ -22,12 +20,22 @@ router.get('/app',(req, res) => {
     res.render("cadastro",{empresa,telaname})
 })
 
-router.post('/login',(req, res) => {
-    const liberado = login()
-    if ( liberado) {
-        res.redirect('/app')
-    }
-    res.redirect('/')
+router.get('/login',(req, res) => {
+    const telaname = 'Login'
+    var usuario = ''
+    var senha = ''
+    res.render("login",{empresa,telaname,usuario,senha})
 })
+
+router.post('/home',(req, res) => {
+    const telaname = 'Home'
+    res.render("home",{telaname})
+
+//    const dados = req.body.usuario   
+//    console.log(dados)
+//    res.redirect('/app?usuario='+dados)
+
+})
+
 
 module.exports = router

@@ -24,19 +24,19 @@
     }
     </style>    
     <div class="login-form" id="main">
-        <form action="/login" method="post">
+        <form action="/home" method="post" id="login">
             <h2 class="text-center">Login</h2>       
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Usuário" required="required" autocomplete="username">
+                <input type="text" class="form-control" placeholder="Usuário" required="required" autocomplete="username" name="usuario" value={{usuario}}>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="Senha" required="required" autocomplete="current-password">
+                <input type="password" class="form-control" placeholder="Senha" required="required" autocomplete="current-password" name="senha">
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block">OK</button>
             </div>
             <div class="clearfix">
-                <label class="float-left form-check-label"><input type="checkbox"> Relembrar</label>
+                <label class="float-left form-check-label"><input type="checkbox" name="relembrar"> Relembrar</label>
                 <a href="#" class="float-right">Esquici a senha?</a>
             </div>        
         </form>
