@@ -3,11 +3,11 @@ const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
 const app = express()
 const admin = require('./routes/admin')
+const session = require("express-session")
+const flash = require("connect-flash")
 const verificacredenciais = require('./src/middleware/verificacredenciais')
 
 // sessão ( Flesh é sessão temporaria )
-const session = require("express-session")
-const flash = require("connect-flash")
 app.use(session({
     secret: "chavedeseguranca",
     resave: true,
@@ -21,7 +21,6 @@ app.use((req, res, next) => {
     res.locals.error_msg = req.flash("error_msg")
     next()
 })
-
 
 // Config - Setup
 app.use(bodyParser.urlencoded({extended: true}))
@@ -51,5 +50,7 @@ app.use('/js' , express.static(__dirname + '/assets/js'));  // JS
 // Serviço
 const PORT = 8081
 app.listen(PORT,() => {
-    console.log('Servidor rodando... http:/localhost:'+PORT)
+    console.log('=========================================================================================================================')
+    console.log('Servidor rodando...','http:/localhost:'+PORT)
+    console.log('=========================================================================================================================')
 })

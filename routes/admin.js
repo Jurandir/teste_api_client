@@ -20,15 +20,25 @@ router.get('/app',(req, res) => {
     res.render("cadastro",{empresa,telaname})
 })
 
+//@GET /login
 router.get('/login',(req, res) => {
     const telaname = 'Login'
     var usuario = ''
     var senha = ''
+    
+    console.log('REQ',req.body)
+    console.log('RES',res.body)
+
     res.render("login",{empresa,telaname,usuario,senha})
 })
 
+//@POST /home
 router.post('/home',(req, res) => {
     const telaname = 'Home'
+    
+    console.log('REQ',req.body)
+    console.log('RES',res.body)
+    
     res.render("home",{telaname})
 
 //    const dados = req.body.usuario   

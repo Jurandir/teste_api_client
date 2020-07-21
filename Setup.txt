@@ -6,10 +6,11 @@ npm install --save body-parser
 npm install --save bootstrap
 npm install --save jquery
 npm install --save popper.js
+
 yarn add axios --save
 
-
-
+npm install --save express-session
+npm install --save connect-flash
 
 npx nodemon app.js
 
@@ -186,7 +187,51 @@ node js - Como configurar sessões #39
 variaveis globais
 req.flash("variavel","valor")
 
+======================================================================
+app.locals persiste ao longo da aplicação toda durante toda sua vida, já o res.locals persiste apenas durante o ciclo de vida de um response.
+======================================================================
+Já para informações mais ligadas ao escopo da requisição como dados do usuário logado, preferências do usuário, caminho da requisição, entre outros, é mais indicado utilizar o res.locals. Veja um exemplo simples de um middleware que é executado antes dos controllers com o objetivo de validar um Json Web Token e disponibilizar as informações ao longo da resposta da requisição:
 
+const express = require('express');
+const path = require('path');
+const app = express();
+(...)
+app.use(function (req, res, next) {
+    const token = req.get('my_auth_token');
+    var jwt = require('jsonwebtoken');
+    jwt.verify(token, 'shhhhh', function(err, decoded) {
+        if (err) {
+            res.locals.authenticated = false;
+            return next();
+        }
+        res.locals.authenticated = true;
+        res.locals.user = decoded.user;
+        next();
+    });
+});
+(...)
+// Mapeamento das rotas
+(...)
+============================================================================
+
+
+var express = require(‘express’);
+var bodyParser = require(‘body-parser’);
+var fs = require(‘fs’);
+
+var app = express();
+
+app.use(bodyParser.urlencoded({ extended:true }));
+app.use(bodyParser.json());
+
+app.use(function(req, res, next){
+ res.setHeader(“Access-Control-Allow-Origin”, “*”);
+ res.setHeader(“Access-Control-Allow-Methods”, “GET, POST, PUT, DELETE”);
+ res.setHeader(“Access-Control-Allow-Headers”, “content-type”);
+ res.setHeader(“Content-Type”, “application/json”);
+ res.setHeader(“Access-Control-Allow-Credentials”, true);
+ next();
+});
 
 
 
