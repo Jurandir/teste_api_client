@@ -1,4 +1,6 @@
 const axios = require("axios")
+const { default: Axios } = require('axios')
+
 const URL_API = 'http://localhost:3333'
 
 const verificacredenciais = (req, res, next) => {
@@ -36,7 +38,10 @@ const verificacredenciais = (req, res, next) => {
           views: 1
         }         
         
-        axios.post(URL_API+"/authenticate", {"email": usuario, "password": senha } ).then(  (resposta) => {  
+        Axios.post(URL_API+"/authenticate", {email: usuario, password: senha }, { "Content-Type": 'application/json'  } ).then(  (resposta) => {  
+
+          // { headers: {Authorization : 'Bearer ' + token}
+          // req.headers['x-access-token'];
 
           req.session.acesso = {
             token: resposta.date.type + ' '+ resposta.data.token
@@ -49,11 +54,26 @@ const verificacredenciais = (req, res, next) => {
           res.setHeader('Authorization', req.session.acesso.token )
           res.setHeader('Accept','*/*')
 
+          req.session.logado     = true
+          req.session.user_id    = 0
+          req.session.session_id = req.sessionID
+          req.session.api_token  = req.session.acesso.tokenl
+          req.session.api_msg    = null
+          console.log('VAR GLOBAIS',req.session.logado, req.sessionID, req.session.acesso.tokenl )            
+
           
         }).catch( (err) => { 
+
+          req.session.logado       = false
+          req.session.user_id      = null
+          req.session.session_id   = null
+          req.session.api_token    = null
+          req.session.api_msg      = err.message
           console.log('Erro da API:'+err.message)
+
           //res.status(401).send('Unauthorized API');
           //next(401);
+
         })
       } else {
         res.setHeader('Content-Type', 'application/json')

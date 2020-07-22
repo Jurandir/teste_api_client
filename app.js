@@ -2,7 +2,7 @@ const express = require('express')
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
 const app = express()
-const admin = require('./routes/admin')
+const rotas = require('./routes/rotas')
 const session = require("express-session")
 const flash = require("connect-flash")
 const verificacredenciais = require('./src/middleware/verificacredenciais')
@@ -17,24 +17,30 @@ app.use(flash())
 
 // middleware ( var globais )
 app.use((req, res, next) => {
-    res.locals.success_msg = req.flash("success_msg")
-    res.locals.error_msg = req.flash("error_msg")
+    res.locals.success_msg  = req.flash("success_msg")
+    res.locals.error_msg    = req.flash("error_msg")
+    res.locals.info_msg     = req.flash("info_msg")
+    res.locals.alert_msg    = req.flash("alert_msg")
+
+     
+    // response = output
+    // request = input
+    if (req.session.logado  === undefined) {
+        req.session.logado     = false
+        req.session.user_id    = null
+        req.session.session_id = null
+        req.session.api_token  = null
+        req.session.api_msg    = null
+        console.log('VAR GLOBAIS',req.session.logado)     
+    }
+     
+    
     next()
 })
 
 // Config - Setup
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
-
-// Views - Templates
-app.engine('handlebars',handlebars({defaltLayout: 'main', partialsDir : __dirname+'/views/partials'}))
-app.set('view engine','handlebars')
-
-// Middleware
-app.use(verificacredenciais);
-
-// Rotas
-app.use('/',admin)
 
 // Bootstrap
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
@@ -43,14 +49,25 @@ app.use('/js', express.static(__dirname  + '/node_modules/jquery/dist'));       
 app.use('/js', express.static(__dirname  + '/node_modules/popper.js/dist/umd')); // redirect popper.js
 
 // assets
-app.use('/img', express.static(__dirname + '/assets/img')); // Imagens
+app.use('/img', express.static(__dirname + '/assets/img')); // IMG
 app.use('/css', express.static(__dirname + '/assets/css')); // CSS
 app.use('/js' , express.static(__dirname + '/assets/js'));  // JS
 
+// Views - Templates
+app.engine('handlebars',handlebars({defaltLayout: 'main', partialsDir : __dirname+'/views/partials'}))
+app.set('view engine','handlebars')
+
+// Middleware
+app.use('/home',verificacredenciais);
+
+// Rotas
+app.use('/',rotas)
+
 // Serviço
 const PORT = 8081
+const HOST = 'http:/localhost:'
 app.listen(PORT,() => {
     console.log('=========================================================================================================================')
-    console.log('Servidor rodando...','http:/localhost:'+PORT)
+    console.log('Servidor rodando...',HOST+PORT)
     console.log('=========================================================================================================================')
 })
