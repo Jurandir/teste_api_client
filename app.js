@@ -1,12 +1,11 @@
-const express = require('express')
+const express    = require('express')
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
-const app = express()
-const rotas = require('./routes/rotas')
-const session = require("express-session")
-const flash = require("connect-flash")
-const verificacredenciais = require('./src/middleware/verificacredenciais')
-const auth = require('./src/middleware/auth')
+const app        = express()
+const rotas      = require('./routes/rotas')
+const session    = require("express-session")
+const flash      = require("connect-flash")
+const auth       = require('./src/middleware/auth')
 
 // sessão ( Flesh é sessão temporaria )
 app.use(session({
@@ -23,9 +22,6 @@ app.use((req, res, next) => {
     res.locals.info_msg     = req.flash("info_msg")
     res.locals.alert_msg    = req.flash("alert_msg")
 
-     
-    // response = output
-    // request = input
     if (req.session.logado  === undefined) {
         req.session.logado     = false
         req.session.user_id    = null
@@ -33,10 +29,7 @@ app.use((req, res, next) => {
         req.session.session_id = null
         req.session.api_token  = null
         req.session.api_msg    = null
-        console.log('VAR GLOBAIS',req.session.logado)     
     }
-     
-    
     next()
 })
 
@@ -60,7 +53,6 @@ app.engine('handlebars',handlebars({defaltLayout: 'main', partialsDir : __dirnam
 app.set('view engine','handlebars')
 
 // Middleware
-app.use('/home',verificacredenciais);
 app.use('/login/check',auth);
 
 // Rotas

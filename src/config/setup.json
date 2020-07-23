@@ -3,5 +3,8 @@
 		"host": "localhost",
 		"port": 3333,
 		"url": "http://localhost:3333"
-	}
+    },
+    "empresa": {
+        "nome":"RunTracker Logistica inteligente"
+    }
 }
