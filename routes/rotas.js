@@ -46,15 +46,23 @@ router.get('/login',(req, res) => {
 })
 
 router.post('/home',(req, res) => {
+    var usuario = ''
+    var senha = ''
 
-    console.log('VAR GLOBAIS /@home',req.session.logado) 
+    console.log('VAR GLOBAIS - POST/@home',req.session.logado) 
+    console.log('Var Session:', req.session )
+    console.log('Base URL',req.baseUrl)
+    console.dir('Hostname',req.hostname)
+    console.dir('IP',req.ip)
+    console.log('ROUTE',req.route)
     
     if (!req.session.logado) {
-        req.flash('error_msg', 'Login erro :'+req.session.api_msg)  // req => res
-        res.redirect('/login')
+        res.redirect("/")
+        req.flash('error_msg', 'Login erro :'+req.session.api_msg) 
     } else {
 
-        console.log('@POST /home')    
+        console.log('@POST /home') 
+           
         res.render("home",{})
     }
 })

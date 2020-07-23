@@ -1,5 +1,5 @@
 const axios = require("axios")
-const { default: Axios } = require('axios')
+const api_getToken = require('../api/api_getToken')
 
 const URL_API = 'http://localhost:3333'
 
@@ -8,98 +8,55 @@ const verificacredenciais = (req, res, next) => {
   const referer = req.header('Referer')
   const method = req.method
 
-  console.log('========================================================================')
-  console.log('usuario:',usuario,' senha:',senha,' referer:',referer,'method:',method)
-  console.log(req.body)
-  console.log('========================================================================')
+  
 
   if ((referer === undefined) || (referer === URL_API+'\login')){
-    console.log('referer === undefined' , 'method:',method)  
+    console.log(1,'referer === undefined' , 'method:',method)  
     next()
   } else 
   if ((!referer === URL_API+'\login') && (method === 'GET')) {
-    console.log('<> de LOGIN', 'method:',method)  
+    console.log(2,'<> de LOGIN', 'method:',method)  
     next()
   } else 
   if ((!referer === URL_API+'\login') && (!method === 'GET')) {
-      console.log('==========>   END()',referer , 'method:',method)  
+      console.log(3,'==========>   END()',referer , 'method:',method)  
       res.end()
   } else {
-    
-      console.log('usuario:',usuario,' senha:',senha,' referer:',referer,'method:',method)
-      console.log('========================================================================')
-      
+          
       if (usuario) {
-        
-        req.session.acesso = {
-          email: usuario,
-          password: senha,
-          session: req.sessionID,
-          views: 1
-        }         
-        
-        Axios.post(URL_API+"/authenticate", {email: usuario, password: senha }, { "Content-Type": 'application/json'  } ).then(  (resposta) => {  
 
-          // { headers: {Authorization : 'Bearer ' + token}
-          // req.headers['x-access-token'];
+        const url = URL_API+'/login'
+        const user = {
+          "email": usuario,
+          "password": senha
+        }
 
-          req.session.acesso = {
-            token: resposta.date.type + ' '+ resposta.data.token
-          }              
-
-          console.log('Rsposta API:')
-          console.log(resposta.data)
-
-          res.setHeader('Content-Type', 'application/json')
-          res.setHeader('Authorization', req.session.acesso.token )
-          res.setHeader('Accept','*/*')
+        api_getToken(url , user ).then(function(dados) {
 
           req.session.logado     = true
-          req.session.user_id    = 0
-          req.session.session_id = req.sessionID
-          req.session.api_token  = req.session.acesso.tokenl
-          req.session.api_msg    = null
-          console.log('VAR GLOBAIS',req.session.logado, req.sessionID, req.session.acesso.tokenl )            
+          req.session.user_id    = dados.user.id
+          req.session.user_name  = dados.user.username          
+          req.session.session_id = req.sessionID 
+          req.session.api_token  = dados.token.type+' '+dados.token.token
+          req.session.api_msg    = 'Sucesso 200 ok'
+          console.log('API Dados:',dados )
+          next()
 
-          
         }).catch( (err) => { 
 
           req.session.logado       = false
           req.session.user_id      = null
+          req.session.user_name    = null
           req.session.session_id   = null
           req.session.api_token    = null
           req.session.api_msg      = err.message
-          console.log('Erro da API:'+err.message)
-
-          //res.status(401).send('Unauthorized API');
-          //next(401);
-
+          console.log('API Erro:',err.message)
+          req.flash('error_msg', `Credenciais não validas $(req.session.api_msg)`)
+          next()
         })
-      } else {
-        res.setHeader('Content-Type', 'application/json')
-       // res.setHeader('Authorization', req.session.acesso.token )
-       // res.setHeader('Accept','*/*')
-
       }
-
-      console.log('Session:', req.sessionID )
-        
-      next()
+      
 }  
 };
 
 module.exports = verificacredenciais
-
-  //console.log('BODY ================================');
-  //console.log( req.body );
-  //console.log('HEADERS ================================');
-  //console.log( JSON.stringify(req.headers.origin)  );
-  //console.log( JSON.stringify(req.headers.referer) ); 
-  //console.log( JSON.stringify(req.headers.cookie)  ); 
-  //console.log( JSON.stringify(req.headers) ); // .origin
-  //console.log( JSON.stringify(req.headers) ); // .referer
-  //console.log('req ================================');
-  //console.log( 'param',req.param );
-  //console.log( 'query',req.query );
-  //console.log( 'method',req.method );
-  //console.log( 'url',req.url );

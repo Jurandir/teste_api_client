@@ -6,6 +6,7 @@ const rotas = require('./routes/rotas')
 const session = require("express-session")
 const flash = require("connect-flash")
 const verificacredenciais = require('./src/middleware/verificacredenciais')
+const auth = require('./src/middleware/auth')
 
 // sessão ( Flesh é sessão temporaria )
 app.use(session({
@@ -28,6 +29,7 @@ app.use((req, res, next) => {
     if (req.session.logado  === undefined) {
         req.session.logado     = false
         req.session.user_id    = null
+        req.session.user_name  = null        
         req.session.session_id = null
         req.session.api_token  = null
         req.session.api_msg    = null
@@ -59,6 +61,7 @@ app.set('view engine','handlebars')
 
 // Middleware
 app.use('/home',verificacredenciais);
+app.use('/login/check',auth);
 
 // Rotas
 app.use('/',rotas)

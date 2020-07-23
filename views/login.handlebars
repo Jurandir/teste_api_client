@@ -1,10 +1,10 @@
 <login>
  
     <div class="login-form" id="main">
-        <form action="/home" method="post" id="login">
+        <form action="/login/check" method="post" id="login">
             <h2 class="text-center">Login</h2>       
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Usuário" required="required" autocomplete="username" name="usuario" value={{usuario}}>
+                <input type="text" class="form-control" placeholder="email@exemplo.com.br" required="required" autocomplete="email" name="usuario" value={{usuario}}>
             </div>
             <div class="form-group">
                 <input type="password" class="form-control" placeholder="Senha" required="required" autocomplete="current-password" name="senha">
