@@ -1,11 +1,12 @@
-const express    = require('express')
-const handlebars = require('express-handlebars')
-const bodyParser = require('body-parser')
-const app        = express()
-const rotas      = require('./routes/rotas')
-const session    = require("express-session")
-const flash      = require("connect-flash")
-const auth       = require('./src/middleware/auth')
+const express     = require('express')
+const handlebars  = require('express-handlebars')
+const bodyParser  = require('body-parser')
+const app         = express()
+const rotas       = require('./routes/rotas')
+const session     = require("express-session")
+const flash       = require("connect-flash")
+const auth        = require('./src/middleware/auth')
+const datasession = require('./src/utils/DataSession')
 
 // sessão ( Flesh é sessão temporaria )
 app.use(session({
@@ -23,12 +24,15 @@ app.use((req, res, next) => {
     res.locals.alert_msg    = req.flash("alert_msg")
 
     if (req.session.logado  === undefined) {
-        req.session.logado     = false
-        req.session.user_id    = null
-        req.session.user_name  = null        
-        req.session.session_id = null
-        req.session.api_token  = null
-        req.session.api_msg    = null
+        datasession.off(req)
+        console.log('REQ:',req.session)
+        
+        //req.session.logado     = false
+        //req.session.user_id    = null
+        //req.session.user_name  = null        
+        //req.session.session_id = null
+        //req.session.api_token  = null
+        //req.session.api_msg    = null
     }
     next()
 })

@@ -1,5 +1,6 @@
 const router  = require('express').Router()
 const config  = require('../src/config/setup.json')
+const bancos  = require('../src/controllers/controllerBancos')
 const empresa = config.empresa.nome
 
 
@@ -31,6 +32,11 @@ router.get('/logout',(req, res) => {
 router.get('/app/cliente',(req, res) => {
     res.render("cadastro",{})
 })
+
+router.get('/app/bancos',(req, res) => {
+    res.render("cadBanco",{bancos})
+})
+
 
 router.get('/login',(req, res) => {
     var usuario = ''
