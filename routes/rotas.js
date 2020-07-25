@@ -1,6 +1,7 @@
 const router  = require('express').Router()
 const config  = require('../src/config/setup.json')
 const bancos  = require('../src/controllers/controllerBancos')
+//const datasession = require('./src/utils/DataSession')
 const empresa = config.empresa.nome
 
 
@@ -30,7 +31,8 @@ router.get('/logout',(req, res) => {
 })
 
 router.get('/app/cliente',(req, res) => {
-    res.render("cadastro",{})
+    const dados = datasession.open(req)
+    res.render("cadastro",dados)
 })
 
 router.get('/app/bancos',(req, res) => {

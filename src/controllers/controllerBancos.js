@@ -1,5 +1,6 @@
 const api_getDados = require('../api/api_getDados')
 
+
 const Banco = {
     api: "/bancos",
     tela: "Cadastro de Bancos",

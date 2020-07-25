@@ -23,17 +23,8 @@ app.use((req, res, next) => {
     res.locals.info_msg     = req.flash("info_msg")
     res.locals.alert_msg    = req.flash("alert_msg")
 
-    if (req.session.logado  === undefined) {
-        datasession.off(req)
-        console.log('REQ:',req.session)
-        
-        //req.session.logado     = false
-        //req.session.user_id    = null
-        //req.session.user_name  = null        
-        //req.session.session_id = null
-        //req.session.api_token  = null
-        //req.session.api_msg    = null
-    }
+    const dados = datasession.open(req)
+    console.log('REQ:',dados)
     next()
 })
 

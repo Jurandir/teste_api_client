@@ -2,6 +2,14 @@ class DataSession {
     constructor() {
         this.dados = {}
     }
+    open(req){
+        if (req.session.logado  === undefined) {
+            this.start(req)
+        } else {
+            this.set(req)
+        }
+        this.get()        
+    }
     set(req) {
         this.dados = { 
             logado:     req.session.logado,
@@ -20,12 +28,12 @@ class DataSession {
             req.session.api_token  = this.dados.api_token
             req.session.api_msg    = this.dados.api_msg
     }
-    off(req) {
+    start(req) {
         this.dados = { 
             logado:     false,
             user_id:    null,
             user_name:  null,        
-            session_id: null,
+            session_id: req.sessionID,
             api_token:  null,
             api_msg:    null
         }
@@ -40,5 +48,5 @@ class DataSession {
   
   // Uso :
 	// const datasession = require('./DataSession')
-	//datasession.off()
+	//datasession.open(req)
 	//console.log( datasession.get() )
