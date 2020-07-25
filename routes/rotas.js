@@ -1,7 +1,7 @@
 const router  = require('express').Router()
 const config  = require('../src/config/setup.json')
 const bancos  = require('../src/controllers/controllerBancos')
-//const datasession = require('./src/utils/DataSession')
+const datasession = require('../src/utils/DataSession')
 const empresa = config.empresa.nome
 
 
@@ -36,7 +36,18 @@ router.get('/app/cliente',(req, res) => {
 })
 
 router.get('/app/bancos',(req, res) => {
-    res.render("cadBanco",{bancos})
+    var dados;
+    datasession.set(req)
+    const variaveis = datasession.get(req)
+
+    bancos(variaveis).then((ret)=>{
+        dados = ret
+    })
+    
+    console.log('======> /app/bancos', dados )
+    
+    res.render("cadBancos",dados)
+
 })
 
 
