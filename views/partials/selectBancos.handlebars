@@ -3,63 +3,71 @@
   <div class="row">
 
       <div class="container">
-        <h2>{{telaname}}</h2>
-        
+
+        <div>
+            <h2>{{tela}}</h2>
+        </div>        
+
         <nav class="navbar navbar-expand-sm bg-light">
           <ul class="navbar-nav">
+            {{#if active_new}}
             <li class="nav-item">
-              <a class="nav-link" href="#">Novo</a>
+              <a class="nav-link" href="#" id="bt_new"><i style='font-size:24px; color:rgb(50, 50, 90)' class='fa fa-file'></i> Novo</a>
             </li>
+            {{/if}}
+            {{#if active_report}}
             <li class="nav-item">
-              <a class="nav-link" href="#">Detalhes</a>
+              <a class="nav-link" href="#" id="bt_report"><i style='font-size:24px; color:rgb(50, 50, 90)' class='fa fa-print'></i> Relatórios</a>
             </li>
+            {{/if}}
+            {{#if active_options}}
             <li class="nav-item">
-              <a class="nav-link" href="#">Impressão</a>
+              <a class="nav-link" href="#" id="bt_options"><i style='font-size:24px; color:rgb(50, 50, 90)' class='fa fa-ellipsis-v'></i> Opções</a>
             </li>
+            {{/if}}
           </ul>
         </nav>
 
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th>Firstname</th>
-              <th>Lastname</th>
-              <th>Email</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>John</td>
-              <td>Doe</td>
-              <td>john@example.com</td>
-              <td>
-                  <i style='font-size:24px; color:red ' class='far'>&#xf2ed;</i>
-                  <i style='font-size:24px; color:green' class='far'>&#xf044;</i>
-              </td>
-            </tr>
-            <tr>
-              <td>Mary</td>
-              <td>Moe</td>
-              <td>mary@example.com</td>
-              <td>
-                  <i style='font-size:24px; color:red ' class='far'>&#xf2ed;</i>
-                  <i style='font-size:24px; color:green' class='far'>&#xf044;</i>
-              </td>
-            </tr>
-            <tr>
-              <td>July</td>
-              <td>Dooley</td>
-              <td>july@example.com</td>
-              <td>
-                  <i style='font-size:24px; color:red ' class='far'>&#xf2ed;</i>
-                  <i style='font-size:24px; color:green' class='far'>&#xf044;</i>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        <div class="table-responsive"> 
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                  {{#each heads}}
+                  <th>{{this}}</th>
+                  {{/each}}
+                  <th></th>
+              </tr>
+            </thead>
+            <tbody>
 
+              {{#each dados}}
+              <tr>
+                {{#each this}}
+                  <td>{{this.this}}</td>
+                {{/each}}
+                <td>
+                    {{#if ../active_detail}}
+                      <i style='font-size:24px; color:orange' class='fa fa-align-justify'></i> 
+                    {{/if}}
+                    {{#if ../active_edit}} 
+                      <i style='font-size:24px; color:green'  class='fa fa-edit'></i> 
+                    {{/if}}
+                    {{#if ../active_delete}} 
+                      <i style='font-size:24px; color:red'    class='fa fa-trash'></i> 
+                    {{/if}}
+                </td>
+              </tr>
+              {{/each}}
+
+            </tbody>
+          </table>
+        </div>
+      </div>
   </div>
 </div>
+
+{{#if active_options}}
+    {{>modalopcoes}}
+{{/if}}
+
 </crudmain>

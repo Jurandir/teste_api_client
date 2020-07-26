@@ -36,18 +36,20 @@ router.get('/app/cliente',(req, res) => {
 })
 
 router.get('/app/bancos',(req, res) => {
-    var dados;
+
     datasession.set(req)
     const variaveis = datasession.get(req)
+    const tela = "TESTE OK"
 
-    bancos(variaveis).then((ret)=>{
-        dados = ret
+    bancos(variaveis).then((dados)=>{
+
+        console.log('======> /app/bancos', dados ) 
+        res.render("cadBancos",dados )
+
+    }).catch( (err) => {
+        console.log('Err', err ) 
     })
     
-    console.log('======> /app/bancos', dados )
-    
-    res.render("cadBancos",dados)
-
 })
 
 

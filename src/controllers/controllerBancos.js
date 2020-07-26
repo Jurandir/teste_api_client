@@ -10,9 +10,17 @@ const controllerBancos = async (variaveis) => {
             api: "/bancos",
             tela: "Cadastro de Bancos",
             token: token,
-            dados: retorno.data,
+            heads: ["Id.","Código","Nome","Site" ],
+            fields: ["id_bancos","co_banco","no_bancos","no_site" ],
             erro: false,
-            msg: ""
+            msg: "",
+            active_new: true,
+            active_edit: true,
+            active_detail: true,
+            active_delete: true,
+            active_report: true,
+            active_options: true,
+            dados: retorno.data
         }    
     }).catch((err) => {
         Banco.dados = {}

@@ -1,0 +1,37 @@
+<!-- Modal Opções -->
+<modalopcoes>
+  <div class="modal fade" id="modaloptions" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Opções</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>active_delete:  {{active_delete}} </p>
+            <p>active_edit:    {{active_edit}} </p>
+            <p>active_detail:  {{active_detail}} </p>
+            <p>active_new:     {{active_new}} </p>
+            <p>active_report:  {{active_report}} </p>
+            <p>active_options: {{active_options}} </p>          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+<script>
+window.addEventListener('load', function() {
+    var btn = document.getElementById("bt_options");
+	
+	btn.addEventListener('click', function() {
+         $("#modaloptions").modal({backdrop: "static"});
+	}, false);
+
+});
+</script>  
+</modalopcoes>
