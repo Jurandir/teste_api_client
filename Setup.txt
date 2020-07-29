@@ -14,7 +14,9 @@ npm install --save connect-flash
 
 npx nodemon app.js
 
-
+npm install --save  morgan
+npm install --save  cookie-parser
+npm install --save font-awesome
 
 
 Template HTML simples - Hands-on: Handlebars

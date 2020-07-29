@@ -2,11 +2,11 @@ const api_getDados = require('../api/api_getDados')
 const { dados } = require('../utils/DataSession')
 
 const controllerBancos = async (variaveis) => {
-    var Banco = {}
+    var conteudo = {}
     
     await api_getDados('/bancos',variaveis.api_token).then( (retorno) => {
         const token = variaveis.api_token
-        Banco = {
+        conteudo = {
             api: "/bancos",
             tela: "Cadastro de Bancos",
             token: token,
@@ -23,12 +23,12 @@ const controllerBancos = async (variaveis) => {
             dados: retorno.data
         }    
     }).catch((err) => {
-        Banco.dados = {}
-        Banco.erro  = true
-        Banco.msg = err    
+        conteudo.dados = {}
+        conteudo.erro  = true
+        conteudo.msg = err    
     })
 
-    return Banco
+    return conteudo
 }
 
 module.exports = controllerBancos
