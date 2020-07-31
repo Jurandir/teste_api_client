@@ -44,7 +44,7 @@ router.get('/app/bancos',(req, res) => {
     bancos(variaveis).then((dados)=>{
 
         console.log('======> /app/bancos', dados ) 
-        res.render("cadBancos",dados )
+        res.render("cadBancos",{ dados:dados, json: JSON.stringify(dados.dados) } )
 
     }).catch( (err) => {
         console.log('Err', err ) 

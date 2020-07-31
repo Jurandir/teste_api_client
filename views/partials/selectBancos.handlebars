@@ -5,7 +5,7 @@
       <div class="container">
 
         <div>
-            <h2>{{tela}}</h2>
+            <h2 class="text-primary"><i class="fa fa-cogs text-primary" style="font-size:36px;"></i> {{dados.tela}}</h2>
         </div>        
 
         <nav class="navbar navbar-expand-sm bg-light">
@@ -15,12 +15,12 @@
               <a class="nav-link" href="#" id="bt_new"><i style='font-size:24px; color:rgb(50, 50, 90)' class='fa fa-file'></i> Novo</a>
             </li>
             {{/if}}
-            {{#if active_report}}
+            {{#if dados.active_report}}
             <li class="nav-item">
               <a class="nav-link" href="#" id="bt_report"><i style='font-size:24px; color:rgb(50, 50, 90)' class='fa fa-print'></i> Relatórios</a>
             </li>
             {{/if}}
-            {{#if active_options}}
+            {{#if dados.active_options}}
             <li class="nav-item">
               <a class="nav-link" href="#" id="bt_options"><i style='font-size:24px; color:rgb(50, 50, 90)' class='fa fa-ellipsis-v'></i> Opções</a>
             </li>
@@ -40,20 +40,26 @@
             </thead>
             <tbody>
 
-              {{#each dados}}
+              {{#each dados.dados}}
               <tr>
                 {{#each this}}
                   <td>{{this.this}}</td>
                 {{/each}}
                 <td>
-                    {{#if ../active_detail}}
-                      <i style='font-size:24px; color:orange' class='fa fa-align-justify'></i> 
+                    {{#if ../dados.active_detail}}
+                    <button type="button" onclick="myTeste({{this.id_bancos}})" class="btn btn-outline-warning" data-toggle="modal" data-target="#ModalCadastro">
+                      <i style='font-size:16px; color:orange' class='fa fa-align-justify'></i> 
+                    </button>
                     {{/if}}
-                    {{#if ../active_edit}} 
-                      <i style='font-size:24px; color:green'  class='fa fa-edit'></i> 
+                    {{#if ../dados.active_edit}} 
+                    <button type="button"  onclick="myLog()" class="btn btn-outline-success">
+                      <i style='font-size:16px; color:green'  class='fa fa-edit'></i>
+                    </button> 
                     {{/if}}
-                    {{#if ../active_delete}} 
-                      <i style='font-size:24px; color:red'    class='fa fa-trash'></i> 
+                    {{#if ../dados.active_delete}} 
+                    <button type="button" class="btn btn-outline-danger">
+                      <i style='font-size:16px; color:red'    class='fa fa-trash'></i>
+                    </button>  
                     {{/if}}
                 </td>
               </tr>
@@ -66,8 +72,43 @@
   </div>
 </div>
 
-{{#if active_options}}
+{{#if dados.active_options}}
     {{>modalopcoes}}
 {{/if}}
+
+{{>modalcadastro}}
+
+<script>
+    var elemento;
+    function myTeste(paramx,paramy) {
+        //console.log('dados:',{{ dados.data }});
+        //var dados = JSON.parse( {{dados}} );
+        //for( dado in dados) {
+        //     console.log('dado',dado);
+       // }
+    }
+
+    function myLog() {
+        console.log('myLog:');
+         elemento = ( JSON.parse( htmlDecode('{{json}}') ) );
+         // console.log('Elemento', elemento );
+         // console.log('Elemento', elemento.find( funtion(a) { if (a.id_bancos===100 ) return a } );
+        
+        
+        elemento.filter(item => item.id_bancos === 100 ).forEach(item => console.log(item));
+
+
+
+        //for(var a=0 ; a<elemento.length ; a++){
+        //  console.log(a,'=====>', elemento[a] ) ;       
+       // }
+    }
+
+    function htmlDecode(input) {
+      var doc = new DOMParser().parseFromString(input, "text/html");
+      return doc.documentElement.textContent;
+    }
+
+</script>
 
 </crudmain>
