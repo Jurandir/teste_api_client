@@ -18,3 +18,8 @@ function closeNav2() {
     document.getElementById("main").style.marginLeft = "0";
     document.body.style.backgroundColor = "white";
   }
+
+  function htmlDecode(input) {
+    var doc = new DOMParser().parseFromString(input, "text/html");
+    return doc.documentElement.textContent;
+  }

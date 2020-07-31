@@ -47,7 +47,7 @@
                 {{/each}}
                 <td>
                     {{#if ../dados.active_detail}}
-                    <button type="button" onclick="myTeste({{this.id_bancos}})" class="btn btn-outline-warning" data-toggle="modal" data-target="#ModalCadastro">
+                    <button type="button" onclick="seek_id_modal({{this.id_bancos}})" class="btn btn-outline-warning" data-toggle="modal" data-target="#ModalCadastro">
                       <i style='font-size:16px; color:orange' class='fa fa-align-justify'></i> 
                     </button>
                     {{/if}}
@@ -80,33 +80,25 @@
 
 <script>
     var elemento;
-    function myTeste(paramx,paramy) {
-        //console.log('dados:',{{ dados.data }});
-        //var dados = JSON.parse( {{dados}} );
-        //for( dado in dados) {
-        //     console.log('dado',dado);
-       // }
-    }
+
+    window.addEventListener('load', function() {
+      elemento = ( JSON.parse( htmlDecode('{{json}}') ) );
+      console.log('Elemento lido.')
+    })
 
     function myLog() {
-        console.log('myLog:');
-         elemento = ( JSON.parse( htmlDecode('{{json}}') ) );
-         // console.log('Elemento', elemento );
-         // console.log('Elemento', elemento.find( funtion(a) { if (a.id_bancos===100 ) return a } );
-        
-        
+        console.log('myLog:');        
         elemento.filter(item => item.id_bancos === 100 ).forEach(item => console.log(item));
-
-
-
-        //for(var a=0 ; a<elemento.length ; a++){
-        //  console.log(a,'=====>', elemento[a] ) ;       
-       // }
     }
 
-    function htmlDecode(input) {
-      var doc = new DOMParser().parseFromString(input, "text/html");
-      return doc.documentElement.textContent;
+    function seek_id_modal( id ) {
+        elemento.filter(item => item.id_bancos === id ).forEach(item => {
+        Object.entries(item).forEach(([key, value]) => {
+        console.log(key + ' ' + value);
+        var tag_id = document.getElementById(key);
+        tag_id.value = value;
+        });
+      });
     }
 
 </script>

@@ -7,17 +7,25 @@
         <div class="modal-content">
             <form action="<%= action %>" method="POST">
             <div class="modal-header">
-            <h4 class="modal-title text-info"><i class="fa fa-cogs text-info" style="font-size:36px;"></i> {{tela}}</h4>
+            <h4 class="modal-title text-info"><i class="fa fa-cogs text-info" style="font-size:36px;"></i> {{dados.tela}}</h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label class="font-weight-bold text-info" for="nome">Nome</label>
-                    <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite o nome" value="{{this.no_bancos}}" />
+                    <label class="font-weight-bold text-info" for="id_bancos">Id.</label>
+                    <input type="text" class="form-control text-secondary" id="id_bancos" name="id_bancos" placeholder="Identificador" value="{{this.id_bancos}}" readonly />
                 </div>
                 <div class="form-group">
-                    <label class="font-weight-bold text-info" for="codigo">Código</label>
-                    <input type="number" class="form-control" id="codigo" name="codigo" placeholder="Digite o código" value="{{this.co_bancos}}" />
+                    <label class="font-weight-bold text-info" for="co_banco">Código</label>
+                    <input type="text" class="form-control text-primary" id="co_banco" name="co_banco" placeholder="Digite o código" value="{{this.co_bancos}}" />
+                </div>
+                <div class="form-group">
+                    <label class="font-weight-bold text-info" for="no_bancos">Nome</label>
+                    <input type="text" class="form-control text-primary" id="no_bancos" name="no_bancos" placeholder="Digite o nome" value="{{this.no_bancos}}" />
+                </div>
+                <div class="form-group">
+                    <label class="font-weight-bold text-info" for="no_site">Site</label>
+                    <input type="text" class="form-control text-primary" id="no_site" name="no_site" placeholder="Digite o site" value="{{this.no_site}}" />
                 </div>
             </div>
             <div class="modal-footer">
