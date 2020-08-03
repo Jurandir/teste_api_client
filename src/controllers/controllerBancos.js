@@ -1,5 +1,6 @@
 const api_getDados = require('../api/api_getDados')
-const { dados } = require('../utils/DataSession')
+//const { dados } = require('../utils/DataSession')
+const config  = require('../src/config/setup.json')
 
 const controllerBancos = async (variaveis) => {
     var conteudo = {}
@@ -7,6 +8,7 @@ const controllerBancos = async (variaveis) => {
     await api_getDados('/bancos',variaveis.api_token).then( (retorno) => {
         const token = variaveis.api_token
         conteudo = {
+            empresa: config.empresa,
             api: "/bancos",
             tela: "Cadastro de Bancos",
             token: token,

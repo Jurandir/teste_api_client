@@ -28,11 +28,11 @@
           </ul>
         </nav>
 
-        <div class="table-responsive"> 
+        <div class="table-responsive table-sm"> 
           <table class="table table-hover">
             <thead>
               <tr>
-                  {{#each heads}}
+                  {{#each dados.heads}}
                   <th>{{this}}</th>
                   {{/each}}
                   <th></th>
@@ -83,7 +83,7 @@
 
     window.addEventListener('load', function() {
       elemento = ( JSON.parse( htmlDecode('{{json}}') ) );
-      console.log('Elemento lido.')
+      console.log('Elemento lido.');
     })
 
     function myLog() {
