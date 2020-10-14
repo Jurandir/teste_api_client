@@ -5,7 +5,11 @@
       <img src="/img/Logo_Polaris.png" class="rounded" alt="Logotipo">
     </div>
     <div class="col-*-*" style="color: #a7d0bb!important; margin-left: 10px;">
-      <h2>{{empresa}} Empresa exemplo SA</h2> 
+      {{#if dados.empresa }}
+        <h2>{{dados.empresa}}</h2> 
+      {{else}}
+        <h2>Sistema Polaris</h2> 
+      {{/if}}
     </div>
   </div>
 </div>

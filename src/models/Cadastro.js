@@ -8,6 +8,14 @@ module.exports.Cadastro = class Cadastro {
             nomecadastro: this.titulo,
             campos: []
         }
+        this.crud = {
+            active_new:     true,
+            active_edit:    true,
+            active_detail:  true,
+            active_delete:  true,
+            active_report:  true,
+            active_options: true,
+        }
     }
 
     init( tabela, titulo) {

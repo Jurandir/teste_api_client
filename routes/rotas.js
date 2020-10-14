@@ -3,6 +3,7 @@ const config  = require('../src/config/setup.json')
 const bancos  = require('../src/controllers/controllerBancos')
 const datasession = require('../src/utils/DataSession')
 const empresa = config.empresa.nome
+var teste_var = 0
 
 
 router.get('/',(req, res) => {
@@ -15,9 +16,11 @@ router.get('/',(req, res) => {
 })
 
 router.get('/home',(req, res) => {
-    const { logado } = req.session 
+    const { logado } = req.session
+    const dados = {dados : { empresa } }
     if (logado) {
-        res.render("home",{})
+        console.log('HOME->',dados)
+        res.render("home",dados)
     }  else {
         req.flash('alert_msg', 'Usuário não logado !')
         res.redirect('/login')
@@ -39,11 +42,46 @@ router.get('/app/bancos',(req, res) => {
 
     datasession.set(req)
     const variaveis = datasession.get(req)
-    const tela = "TESTE OK"
+
+    var paginas = {
+        linhas: 0,
+        linhas_pagina: 10,
+        pagina: 1,
+        lista: {}
+    }
 
     bancos(variaveis).then((dados)=>{
 
-        console.log('======> /app/bancos', dados ) 
+       
+        
+
+
+        const array = ( dados.dados );
+
+        console.log('TypeOF :', typeof(array))
+
+        //if (!array === undefined){ 
+            //console.log('(XX) array:', array )
+
+            //array.filter(function(currentValue, index, arr), thisValue)
+
+
+            linha_ini = (paginas.pagina-1) * paginas.linhas_pagina
+            linha_fim = (paginas.pagina) * paginas.linhas_pagina
+            paginas.linhas = array.length
+
+            paginas.lista = array.filter((item,index)=>{
+
+                return ( index >= linha_ini && index < linha_fim )
+
+            })
+        //}
+
+        console.log('Paginas:', paginas )
+
+        ++teste_var
+        console.log('Contador >>> :', teste_var )
+
         res.render("cadBancos",{ dados:dados, json: JSON.stringify(dados.dados) } )
 
     }).catch( (err) => {
@@ -54,12 +92,14 @@ router.get('/app/bancos',(req, res) => {
 
 
 router.get('/login',(req, res) => {
+    const dados = {dados : { empresa } }
     var usuario = ''
     var senha = ''
 
     const { logado } = req.session 
     if (logado) {
-        res.render("home",{})
+            console.log('LOGIN->HOME->',dados)
+            res.render("home",dados)
     }  else {
         res.render("login",{usuario,senha})
     }

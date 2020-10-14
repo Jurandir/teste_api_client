@@ -19,6 +19,8 @@
   "main": "app.js",
   "devDependencies": {},
   "scripts": {
+    "start:dev": "nodemon --inspect app.js",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "jurandir <jurandir.gsh@gmail.com>",
